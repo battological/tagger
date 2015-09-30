@@ -45,8 +45,8 @@ App = React.createClass({
           <h1>Tagger</h1>
         </header>
         
-      <Tags tags={this.state.tags} />
-      <Items items={this.whichItems(this.state.tags)} />
+      <Tags />
+      <Items />
       </div>
     )
   }
