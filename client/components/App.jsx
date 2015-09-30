@@ -7,14 +7,31 @@ App = React.createClass({
     }
   },
 
-  /*
-  whichItems(tags, and=0) {
-    if (!and) {  // boolean OR
-      return {
+  getAllItems() {
+    if (this.data.items.length > 0) {
+      return (
+        _.uniq([this.data.items.map(
+          function(item) { 
+            return item.tags; 
+          }
+        ).reduce(
+          function(p, c) { 
+            return p.concat(c); 
+          }
+        )])
+      )
+    } else {
+      return []
+    }
+  },
+
+  whichItems(tags, andOr=0) {
+    if (!andOr) {  // boolean OR
+      return (
         this.data.items.filter(function(item) {
 	  return _.intersection(item.tags, tags).length > 0
 	})
-      }
+      )
     } else { // boolean AND
       // do stuff
     }
@@ -45,7 +62,7 @@ App = React.createClass({
           <h1>Tagger</h1>
         </header>
         
-      <Tags tags={this.data.tags} />
+      <Items items={this.whichItems(this.getAllItems())} />
       </div>
     )
   }
