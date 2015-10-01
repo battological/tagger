@@ -9,18 +9,28 @@ App = React.createClass({
     }
   },
 
-  whichItems(tags, andOr=0) {
-    if (!andOr) {  // boolean OR
-      return (
-        this.data.items.filter(function(item) {
-	  return _.intersection(item.tags.map(function(tag) {
-	    return tag.name
-	  }), tags).length > 0
-	})
-      )
-    } else { // boolean AND
-      // do stuff
+  /**
+   * @param tags - An array of tagIds
+   * @param and - Whether to use a boolean AND (1) or OR (0)
+   * @returns An array of items tagged with the specified tags
+   */
+  whichItems(tags, and=0) {
+    var min = 1;
+    if (and) {
+      min = tags.length;
     }
+    return (
+      this.data.items.filter(function(item) {
+	return _.intersection(
+	  item.tags.map(function(tag) { 
+	    return tag._str; 
+	  }), 
+	  tags.map(function(tag) { 
+	    return tag._str; 
+	  })
+	).length >= min
+      })
+    );
   },
 
   render() {
@@ -31,9 +41,13 @@ App = React.createClass({
         </header>
 
         <AccountsUIWrapper />
-        
-        <TagList tags={this.data.tags} />
-        <ItemList items={this.whichItems(this.data.tags)} />
+
+	<TagList tags={this.data.tags} />
+        <ItemList items={
+	  this.whichItems(this.data.tags.map(
+	    function(tag) { return tag._id; }
+	  ))
+	} />
       </div>
     )
   }
