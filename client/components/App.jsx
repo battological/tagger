@@ -4,7 +4,8 @@ App = React.createClass({
   getMeteorData() {
     return {
       items: Items.find({}).fetch(),
-      tags: Tags.find({}).fetch()
+      tags: Tags.find({}).fetch(),
+      currentUser: Meteor.user()
     }
   },
 
@@ -28,9 +29,11 @@ App = React.createClass({
         <header>
           <h1>Tagger</h1>
         </header>
+
+        <AccountsUIWrapper />
         
-      <TagList tags={this.data.tags} />
-      <ItemList items={this.whichItems(this.data.tags)} />
+        <TagList tags={this.data.tags} />
+        <ItemList items={this.whichItems(this.data.tags)} />
       </div>
     )
   }
