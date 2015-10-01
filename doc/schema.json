@@ -1,6 +1,6 @@
 Item = {
   "name": String,
-  "tags": [ Object.Tag, ... ],
+  "tags": [ ObjectId, ... ],
   "owner": String
 }
 
