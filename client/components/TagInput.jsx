@@ -1,5 +1,5 @@
 TagInput = React.createClass({
-  newSubmit(e) {
+  newTagSubmit(e) {
     e.preventDefault();
 
     var text = React.findDOMNode(this.refs.tagText).value.trim();
@@ -7,11 +7,6 @@ TagInput = React.createClass({
     Meteor.call("addTag", text);
 
     React.findDOMNode(this.refs.tagText).value = '';
-  },
-
-  chooseSubmit(e) {
-    e.preventDefault();
-    // to complete...
   },
 
   render() {
