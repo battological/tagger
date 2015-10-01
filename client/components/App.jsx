@@ -10,9 +10,10 @@ App = React.createClass({
   },
 
   /**
-   * @param tags - An array of tagIds
-   * @param and - Whether to use a boolean AND (1) or OR (0)
-   * @returns An array of items tagged with the specified tags
+   * Find the items that match the tags and the search strategy specified
+   * @param {ObjectId[]} tags - An array of tagIds
+   * @param {number} and - Whether to use a boolean AND (1) or OR (0)
+   * @returns {Item[]} - An array of items tagged with the specified tags
    */
   whichItems(tags, and=0) {
     var min = 1;
@@ -41,6 +42,8 @@ App = React.createClass({
         </header>
 
         <AccountsUIWrapper />
+
+        <ItemCreator tags={this.data.tags} />
 
 	<TagList tags={this.data.tags} />
         <ItemList items={
