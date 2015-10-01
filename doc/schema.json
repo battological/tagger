@@ -1,5 +1,10 @@
 Item = {
-  "name": ___,
-  "tags": [___, ___, ___, ...],
-  "owner": ___
+  "name": String,
+  "tags": [ Object.Tag, ... ],
+  "owner": String
+}
+
+Tag = {
+  "name": String,
+  "owner": String
 }
