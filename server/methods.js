@@ -10,7 +10,7 @@ Meteor.methods({
     }
 
     // Make sure this tag doesn't already exist
-    var existing = Tags.find({ name: tag }) 
+    var existing = Tags.find({ owner: Meteor.userId(), name: tag }) 
     if (existing.count() > 0) {
       return existing.fetch()[0];
     }
@@ -26,7 +26,7 @@ Meteor.methods({
   /**
    * Adds a new item to the db
    * @param {string} text - The item name
-   * @param {ObjectId[]} tags - Optional array of ObjectIds representing Tag objects from the Tag collection
+   * @param {string[]} tags - Optional array of id strings representing Tag objects from the Tag collection
    * @returns {ObjectId} - The ID of the newly created Item object in Mongo
    */
   addItem(text, tags = []) {
@@ -45,8 +45,8 @@ Meteor.methods({
 
   /**
    * Associates an existing tag with an existing item
-   * @param {ObjectId} itemId - The ObjectId of the item to update
-   * @param {ObjectId} taskId - The ObjectId of the new tag to associate with this Item
+   * @param {string} itemId - The string ID representation of the item to update
+   * @param {string} taskId - The string ID representation of the new tag to associate with this Item
    */
   addTaskToItem(itemId, taskId) {
     Items.update(itemId, { $push: { tasks: taskId } } );

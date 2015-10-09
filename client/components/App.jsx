@@ -34,6 +34,10 @@ App = React.createClass({
     );
   },
 
+  clickedTag(key) {
+    return null;
+  },
+
   render() {
     return (
       <div>
@@ -44,8 +48,13 @@ App = React.createClass({
         <AccountsUIWrapper />
 
         <ItemCreator tags={this.data.tags} />
+	<TagInput />
 
-	<TagList tags={this.data.tags} />
+	<TagList 
+	  tags={this.data.tags} 
+	  whichChecked={this.data.tags.map((tag) => { return tag._id; })}
+	  clicked={this.clickedTag} 
+	/>
         <ItemList items={
 	  this.whichItems(this.data.tags.map(
 	    function(tag) { return tag._id; }

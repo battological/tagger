@@ -1,7 +1,20 @@
 ItemCreator = React.createClass({
-  chooseTagSubmit(e) {
-    e.preventDefault();
-    // to complete...
+  getInitialState() {
+    return({
+      whichChecked: []
+    })
+  },
+
+  checkedTag(id) {
+    var newArray;
+    if (_.contains(this.state.whichChecked, id)) {
+      newArray = this.state.whichChecked.filter(function(e) {
+        return e !== id;
+      });
+    } else {
+      newArray = [...this.state.whichChecked, id];
+    }
+    this.setState({ whichChecked: newArray });
   },
 
   newItemSubmit(e) {
@@ -9,16 +22,24 @@ ItemCreator = React.createClass({
 
     var text = React.findDOMNode(this.refs.itemInput).value.trim();
 
-    Meteor.call("addItem", text);
+    Meteor.call("addItem", text, this.state.whichChecked);
 
     React.findDOMNode(this.refs.itemInput).value = '';
+    this.setState({ whichChecked: [] });
   },
 
   render() {
     return (
-      <div className="item-create">
-        <ItemInput onNewSubmit={this.newItemSubmit} />
-        <TagInput tags={this.props.tags} onChooseSubmit={this.chooseTagSubmit} />
+      <div className="iteam-create-container">
+        <form className="item-create" onSubmit={this.newItemSubmit}>
+          <input type="text" ref="itemInput" placeholder="New item" />
+
+          <TagList 
+	    tags={this.props.tags} 
+	    whichChecked={this.state.whichChecked} 
+	    clicked={this.checkedTag} 
+	  />
+        </form>
       </div>
     );
   }

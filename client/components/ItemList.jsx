@@ -1,7 +1,7 @@
 ItemList = React.createClass({
   renderItems() {
     return this.props.items.map((item) => {
-      return <Item item={item} />
+      return <Item key={item._id} item={item} />
     });
   },
       
