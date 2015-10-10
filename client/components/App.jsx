@@ -28,7 +28,7 @@ App = React.createClass({
   whichItems(tags) {
     var min = 1;  // OR
     if (this.state.bool) {  // AND
-      min = tags.length;
+      min = Math.max(tags.length, 1);  // at least 1 tag must be selected
     } else if (this.state.bool == -1) {  // NOT
       // ...
     }

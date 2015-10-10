@@ -42,6 +42,11 @@ Meteor.methods({
     if (!Meteor.userId()) {
       throw new Meteor.Error("not-authorized");
     }
+    
+    if (!tags.length) {  // if no tags checked
+      var no_tag = Meteor.call("addTag", "[no tag]");
+      tags = [no_tag];
+    }
 
     var insert = Items.insert({
       name: text,

@@ -50,13 +50,7 @@ ItemCreator = React.createClass({
     if (this.state.editItem) {  // editing existing item
       Meteor.call("updateItem", this.state.editItem._id, text, tags); 
     } else {  // creating new item
-      Meteor.call("addItem", text, tags, function(errItem, resItem) {
-        if (!tags.length) {  // if no tags checked
-          Meteor.call("addTag", "[no tag]", function(errTag, resTag) {  // make [no tag] tag, if there isn't one (else return the id of [no tag] tag)
-            Meteor.call("addTaskToItem", resItem, resTag)  // set new item's tag to [no tag]
-          });
-        }
-      });
+      Meteor.call("addItem", text, tags);
     }
 
     this.setState({  // remove the item
