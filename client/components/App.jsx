@@ -1,17 +1,25 @@
 App = React.createClass({
-  mixins: [ReactMeteorData],
+  getInitialState() {
+    return({
+      whichChecked: []
+    });
+  },
 
-  getMeteorData() {
-    return {
-      items: Items.find({}).fetch(),
-      tags: Tags.find({}).fetch(),
-      currentUser: Meteor.user()
-    }
+  checkAll() {
+    this.setState({
+      whichChecked: this.props.data.tags.map((tag) => { return tag._id })
+    })
+  },
+
+  checkNone() {
+    this.setState({
+      whichChecked: []
+    })
   },
 
   /**
    * Find the items that match the tags and the search strategy specified
-   * @param {ObjectId[]} tags - An array of tagIds
+   * @param {string} tags - An array of tagId strings
    * @param {number} and - Whether to use a boolean AND (1) or OR (0)
    * @returns {Item[]} - An array of items tagged with the specified tags
    */
@@ -21,21 +29,25 @@ App = React.createClass({
       min = tags.length;
     }
     return (
-      this.data.items.filter(function(item) {
-	return _.intersection(
-	  item.tags.map(function(tag) { 
-	    return tag._str; 
-	  }), 
-	  tags.map(function(tag) { 
-	    return tag._str; 
-	  })
-	).length >= min
+      this.props.data.items.filter(function(item) {
+	return _.intersection(  // returns the intersection of
+	  item.tags,  // the item's tags and
+	  tags  // the specified tags
+	).length >= min  // if the intersection qualifies for bool AND or OR, return this item
       })
     );
   },
 
-  clickedTag(key) {
-    return null;
+  clickedTag(id) {
+    var newArray;
+    if (_.contains(this.state.whichChecked, id)) {
+      newArray = this.state.whichChecked.filter(function(e) {
+	return e !== id;
+      });
+    } else {
+      newArray = [...this.state.whichChecked, id];
+    }
+    this.setState({ whichChecked: newArray });
   },
 
   render() {
@@ -47,19 +59,17 @@ App = React.createClass({
 
         <AccountsUIWrapper />
 
-        <ItemCreator tags={this.data.tags} />
+        <ItemCreator tags={this.props.data.tags} />
 	<TagInput />
 
+        <button className="check-all" onClick={this.checkAll}>Select All</button>
+	<button className="check-none" onClick={this.checkNone}>Select None</button>
 	<TagList 
-	  tags={this.data.tags} 
-	  whichChecked={this.data.tags.map((tag) => { return tag._id; })}
+	  tags={this.props.data.tags} 
+	  whichChecked={this.state.whichChecked}
 	  clicked={this.clickedTag} 
 	/>
-        <ItemList items={
-	  this.whichItems(this.data.tags.map(
-	    function(tag) { return tag._id; }
-	  ))
-	} />
+        <ItemList items={this.whichItems(this.state.whichChecked)} />
       </div>
     )
   }
