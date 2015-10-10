@@ -1,6 +1,6 @@
 Item = {
   "name": String,
-  "tags": [ String, ... ], // String = ObjectId string of each tag
+  "tags": [ String, ... ], // String = id string of each tag
   "owner": String
 }
 

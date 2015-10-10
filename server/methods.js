@@ -50,6 +50,18 @@ Meteor.methods({
    */
   addTaskToItem(itemId, taskId) {
     Items.update(itemId, { $push: { tasks: taskId } } );
+  },
+
+  updateItem(id, text, tags) {
+    if (!Meteor.userId() || Meteor.userId() !== Items.findOne({ _id: id }).owner) {
+      throw new Meteor.Error("not-authorized");
+    }
+
+    var update = Items.update(id, {
+      $set: { name: text, tags: tags }
+    });
+
+    return update;
   }
 
 });

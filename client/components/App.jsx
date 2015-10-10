@@ -1,7 +1,8 @@
 App = React.createClass({
   getInitialState() {
     return({
-      whichChecked: []
+      whichChecked: [],
+      editItem: false
     });
   },
 
@@ -50,6 +51,10 @@ App = React.createClass({
     this.setState({ whichChecked: newArray });
   },
 
+  edit(item) {
+    this.setState({ editItem: item });
+  },
+
   render() {
     return (
       <div>
@@ -59,7 +64,11 @@ App = React.createClass({
 
         <AccountsUIWrapper />
 
-        <ItemCreator tags={this.props.data.tags} />
+        <ItemCreator 
+	  tags={this.props.data.tags} 
+	  editItem={this.state.editItem}
+	  whichChecked={this.state.editItem.tags || []}
+	/>
 	<TagInput />
 
         <button className="check-all" onClick={this.checkAll}>Select All</button>
@@ -69,7 +78,7 @@ App = React.createClass({
 	  whichChecked={this.state.whichChecked}
 	  clicked={this.clickedTag} 
 	/>
-        <ItemList items={this.whichItems(this.state.whichChecked)} />
+        <ItemList items={this.whichItems(this.state.whichChecked)} edit={this.edit} />
       </div>
     )
   }
