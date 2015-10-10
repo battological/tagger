@@ -3,7 +3,7 @@ App = React.createClass({
     return({
       whichChecked: [],
       editItem: false,
-      bool: 0  // 1 = AND, 0 = OR, -1 = NOT
+      bool: 0  // 1 = AND, 0 = OR, 2 = NOT
     });
   },
 
@@ -27,19 +27,20 @@ App = React.createClass({
    */
   whichItems(tags) {
     var min = 1;  // OR
-    if (this.state.bool) {  // AND
+    if (this.state.bool === 1) {  // AND
       min = Math.max(tags.length, 1);  // at least 1 tag must be selected
-    } else if (this.state.bool == -1) {  // NOT
-      // ...
     }
     return (
       this.props.data.items.filter(function(item) {
-	return _.intersection(  // returns the intersection of
+	var intersection = _.intersection(  // returns the intersection of
 	  item.tags,  // the item's tags and
 	  tags  // the specified tags
-	).length >= min ||  // if the intersection qualifies for bool AND or OR, return this item
-	(!item.tags.length && !tags.length)  // or if item has no tags and none are selected
-      })
+	)
+	if (this.state.bool === 2) {  // NOT
+	  return !intersection.length;  // intersection should be 0 for NOT
+	}
+	return intersection.length >= min  // if the intersection qualifies for bool AND or OR, return this item
+      }, this)
     );
   },
 
@@ -86,7 +87,7 @@ App = React.createClass({
 	<form>
 	  <input type="radio" name="booleans" value="OR" onClick={this.changeBool.bind(null, 0)} defaultChecked="checked" />OR
 	  <input type="radio" name="booleans" value="AND" onClick={this.changeBool.bind(null, 1)} />AND
-	  <input type="radio" name="booleans" value="NOT" onClick={this.changeBool.bind(null, -1)}/>NOT
+	  <input type="radio" name="booleans" value="NOT" onClick={this.changeBool.bind(null, 2)}/>NOT
 	</form>
 	<TagList 
 	  tags={this.props.data.tags} 
