@@ -3,8 +3,8 @@ Wrapper = React.createClass({
 
   getMeteorData() {
     return {
-      items: Items.find({}).fetch(),
-      tags: Tags.find({}).fetch(),
+      items: Items.find({}, { sort: { name: 1 } }).fetch(),
+      tags: Tags.find({}, { sort: { name: 1 } }).fetch(),
       currentUser: Meteor.user()
     }
   },

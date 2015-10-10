@@ -2,7 +2,7 @@ Meteor.methods({
   /**
    * Adds a new tag to the db
    * @param tag {string} - The tag name
-   * @returns {ObjectId} - The ObjectId of the newly created Tag object in Mongo or the ObjectId of the existing Tag object in Mongo
+   * @returns {string} - The id of the newly created Tag object in Mongo or the id of the existing Tag object in Mongo
    */
   addTag(tag) {
     if (!Meteor.userId()) {
@@ -12,7 +12,7 @@ Meteor.methods({
     // Make sure this tag doesn't already exist
     var existing = Tags.find({ owner: Meteor.userId(), name: tag }) 
     if (existing.count() > 0) {
-      return existing.fetch()[0];
+      return existing.fetch()[0]._id;
     }
       
     var insert = Tags.insert({
@@ -55,10 +55,10 @@ Meteor.methods({
   /**
    * Associates an existing tag with an existing item
    * @param {string} itemId - The string ID representation of the item to update
-   * @param {string} taskId - The string ID representation of the new tag to associate with this Item
+   * @param {string} tagId - The string ID representation of the new tag to associate with this Item
    */
-  addTaskToItem(itemId, taskId) {
-    Items.update(itemId, { $push: { tasks: taskId } } );
+  addTaskToItem(itemId, tagId) {
+    Items.update(itemId, { $push: { tags: tagId } } );
   },
 
   updateItem(id, text, tags) {
