@@ -78,7 +78,11 @@ App = React.createClass({
 	  whichChecked={this.state.whichChecked}
 	  clicked={this.clickedTag} 
 	/>
-        <ItemList items={this.whichItems(this.state.whichChecked)} edit={this.edit} />
+        <ItemList 
+	  items={this.whichItems(this.state.whichChecked)} 
+	  edit={this.edit} 
+	  tags={this.props.data.tags}
+	/>
       </div>
     )
   }

@@ -23,6 +23,15 @@ Meteor.methods({
     return insert;
   },
 
+  deleteTag(tag) {
+    if (!Meteor.userId() || Meteor.userId() !== tag.owner) {
+      throw new Meteor.Error("not-authorized");
+    }
+
+    Tags.remove(tag._id);  // delete tag
+    Items.update({ tags: tag._id }, { $pull: { tags: tag._id } }, { multi: true });  // remove tag from item tag lists
+  },
+
   /**
    * Adds a new item to the db
    * @param {string} text - The item name
@@ -62,6 +71,13 @@ Meteor.methods({
     });
 
     return update;
-  }
+  },
 
+  deleteItem(item) {
+    if (!Meteor.userId() || Meteor.userId() !== item.owner) {
+      throw new Meteor.Error("not-authorized");
+    }
+
+    Items.remove(item._id);
+  } 
 });
