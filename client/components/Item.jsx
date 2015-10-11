@@ -16,8 +16,8 @@ Item = React.createClass({
 	}</p>
 	<p className="description">{this.props.item.description}</p>
 	<div className="controls">
-          <a href="#" onClick={this.props.edit.bind(null, this.props.item)}>edit</a>&nbsp;
-	  <a href="#" onClick={this.delete.bind(null, this.props.item)}>&times;</a>
+          <a href="#" onClick={this.props.edit.bind(null, this.props.item)}>edit</a> |&nbsp; 
+	  <a href="#" onClick={this.delete.bind(null, this.props.item)}>delete</a>
 	</div>
       </li>
     )

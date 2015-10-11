@@ -1,3 +1,24 @@
 .create-edit {
   flex: 1;
 }
+
+.create-edit ul {
+  margin: 0;
+}
+
+.create-edit button {
+  font-size: large;
+  width: 100%;
+}
+
+.create-edit input[type=text], textarea {
+  margin-bottom: 1em;
+}
+
+.create-edit .item-create-text input, textarea {
+  width: 100%;
+}
+
+.create-edit .tag-input input {
+  width: 40%;
+}

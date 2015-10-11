@@ -79,18 +79,28 @@ App = React.createClass({
 
             <div className="tag-display">
 	      <h2>Your Tags</h2>
+
+	      <div className="booleans">
+	        <form>
+	          <label>Show items that match...</label><br />
+	          <input type="radio" name="booleans" value="OR" onClick={this.changeBool.bind(null, 0)} defaultChecked="checked" />Any
+	          <input type="radio" name="booleans" value="AND" onClick={this.changeBool.bind(null, 1)} />All
+	          <input type="radio" name="booleans" value="NOT" onClick={this.changeBool.bind(null, 2)}/>None <br />
+	          <span className="followup">of the following tags:</span>
+	        </form>
+	      </div>
+
+	      <div className="all-none">
+	        <label>Select&nbsp;&nbsp;</label>
+                <button className="check-all" onClick={this.checkAll}>All</button>&nbsp;
+	        <button className="check-none" onClick={this.checkNone}>None</button>
+	      </div>
+
 	      <TagList 
 	        tags={this.props.data.tags} 
 	        whichChecked={this.state.whichChecked}
 	        clicked={this.clickedTag} 
 	      />
-              <button className="check-all" onClick={this.checkAll}>Select All</button>&nbsp;
-	      <button className="check-none" onClick={this.checkNone}>Select None</button>
-	      <form>
-	        <input type="radio" name="booleans" value="OR" onClick={this.changeBool.bind(null, 0)} defaultChecked="checked" />OR
-	        <input type="radio" name="booleans" value="AND" onClick={this.changeBool.bind(null, 1)} />AND
-	        <input type="radio" name="booleans" value="NOT" onClick={this.changeBool.bind(null, 2)}/>NOT
-	      </form>
 	    </div>
 
 	    <div className="item-display">

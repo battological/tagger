@@ -75,20 +75,25 @@ ItemCreator = React.createClass({
     return (
       <div className="iteam-create-container">
         <form className="item-create" onSubmit={this.itemSubmit}>
-          <input 
-	    type="text" 
-	    ref="itemInput" 
-	    placeholder="New item" 
-	    value={this.state.name} 
-	    onChange={this.changeName}
-	  />
-	  <textarea 
-	    ref="itemDescription" 
-	    placeholder="Description"
-	    onChange={this.changeDescription}
-	    value={this.state.description}
-	  />
+	  <div className="item-create-text">
+	    <label>Item name</label>
+            <input 
+	      type="text" 
+	      ref="itemInput" 
+	      placeholder="New item" 
+	      value={this.state.name} 
+	      onChange={this.changeName}
+	    />
+	    <label>Item description (optional)</label>
+	    <textarea 
+	      ref="itemDescription" 
+	      placeholder="Description"
+	      onChange={this.changeDescription}
+	      value={this.state.description}
+	    />
+	  </div>
 
+          <label>Tags</label>
           <TagList 
 	    tags={this.props.tags} 
 	    whichChecked={this.state.whichChecked} 

@@ -1,3 +1,11 @@
 .tag-display {
-  flex: 2;
+  flex: 1;
+}
+
+.tag-display button {
+  margin-top: 2em;
+}
+
+.tag-display .followup {
+  font-weight: bolder;
 }

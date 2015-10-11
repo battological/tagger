@@ -1,9 +1,34 @@
+body {
+  font-family: "Titillium Web", sans-serif;
+  margin: auto;
+  width: 90%;
+}
+
+a {
+  color: #035570;
+  text-decoration: none;
+}
+
 button { 
+  background-color: white;
   border: 1px solid #292929;
   box-shadow: 0;
+  font-family: "Titillium Web", sans-serif;
+}
+
+h2 {
+  border-bottom: 1px solid gray;
+}
+
+label {
+  font-size: larger;
+  font-weight: bolder;
+}
+
+ul {
+  padding-left: 0;
 }
 
 .body {
   display: flex;
 }
-
