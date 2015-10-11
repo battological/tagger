@@ -5,6 +5,7 @@ ItemCreator = React.createClass({
     return({
       editItem: (this.props.editItem || false),
       name: (this.props.editItem ? this.props.editItem.name : ''),
+      description: (this.props.editItem ? this.props.editItem.description : ''),
       whichChecked: []
     })
   },
@@ -19,6 +20,7 @@ ItemCreator = React.createClass({
       this.setState({
 	editItem: newProps.editItem,
         name: newProps.editItem.name,
+	description: newProps.editItem.description
       });
     }
   },
@@ -41,21 +43,30 @@ ItemCreator = React.createClass({
     });
   },
 
+  changeDescription(e) {
+    this.setState({
+      description: e.target.value
+    });
+  },
+
   itemSubmit(e) {
     e.preventDefault();
 
     var text = this.state.name;
     var tags = this.state.whichChecked;
+    var description = this.state.description;
 
+    console.log(text+', '+description+', '+tags);
     if (this.state.editItem) {  // editing existing item
-      Meteor.call("updateItem", this.state.editItem._id, text, tags); 
+      Meteor.call("updateItem", this.state.editItem._id, text, description, tags); 
     } else {  // creating new item
-      Meteor.call("addItem", text, tags);
+      Meteor.call("addItem", text, description, tags);
     }
 
     this.setState({  // remove the item
       editItem: false,
       name: '',
+      description: '',
       whichChecked: [] 
     });
   },
@@ -71,14 +82,21 @@ ItemCreator = React.createClass({
 	    value={this.state.name} 
 	    onChange={this.changeName}
 	  />
+	  <textarea 
+	    ref="itemDescription" 
+	    placeholder="Description"
+	    onChange={this.changeDescription}
+	    value={this.state.description}
+	  />
 
           <TagList 
 	    tags={this.props.tags} 
 	    whichChecked={this.state.whichChecked} 
 	    clicked={this.checkedTag} 
 	  />
-	  <button type="submit">{this.state.editItem ? 'Update' : 'Create'}</button>
         </form>
+	<TagInput />
+	<button type="submit" onClick={this.itemSubmit}>{this.state.editItem ? 'Update' : 'Create'}</button>
       </div>
     );
   }

@@ -14,7 +14,7 @@ ItemList = React.createClass({
       
   render() {
     return (
-      <ul>
+      <ul className="item-list">
         {this.renderItems()}
       </ul>
     )

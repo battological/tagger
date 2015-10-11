@@ -1,0 +1,12 @@
+header {
+  display: flex;
+}
+
+header h1 {
+  flex: 9;
+  margin-top: 0;
+}
+
+header span {
+  flex: 1;
+}

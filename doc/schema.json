@@ -1,6 +1,7 @@
 Item = {
   "name": String,
   "tags": [ String, ... ], // String = id string of each tag
+  "description": String,
   "owner": String
 }
 

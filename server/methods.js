@@ -38,7 +38,7 @@ Meteor.methods({
    * @param {string[]} tags - Optional array of id strings representing Tag objects from the Tag collection
    * @returns {ObjectId} - The ID of the newly created Item object in Mongo
    */
-  addItem(text, tags = []) {
+  addItem(text, description, tags = []) {
     if (!Meteor.userId()) {
       throw new Meteor.Error("not-authorized");
     }
@@ -51,6 +51,7 @@ Meteor.methods({
     var insert = Items.insert({
       name: text,
       tags: tags,
+      description: description,
       owner: Meteor.userId()
     });
 
@@ -66,13 +67,13 @@ Meteor.methods({
     Items.update(itemId, { $push: { tags: tagId } } );
   },
 
-  updateItem(id, text, tags) {
+  updateItem(id, text, description, tags) {
     if (!Meteor.userId() || Meteor.userId() !== Items.findOne({ _id: id }).owner) {
       throw new Meteor.Error("not-authorized");
     }
 
     var update = Items.update(id, {
-      $set: { name: text, tags: tags }
+      $set: { name: text, description: description, tags: tags }
     });
 
     return update;
