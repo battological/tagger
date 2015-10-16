@@ -1,6 +1,25 @@
 Item = React.createClass({
-  delete(item) {
-    Meteor.call("deleteItem", item);
+  getInitialState() {
+    return({
+      toDelete: false
+    })
+  },
+
+  delete() {
+    if (this.state.toDelete) {
+      Meteor.call("deleteItem", this.props.item);
+      this.cancelDelete();
+    } else {  // this triggers confirmation of deletion
+      this.setState({
+        toDelete: true
+      });
+    }
+  },
+
+  cancelDelete() {
+    this.setState({
+      toDelete: false
+    });
   },
 
   render() {
@@ -16,8 +35,19 @@ Item = React.createClass({
 	}</p>
 	<p className="description">{this.props.item.description}</p>
 	<div className="controls">
-          <a href="#" onClick={this.props.edit.bind(null, this.props.item)}>edit</a> |&nbsp; 
-	  <a href="#" onClick={this.delete.bind(null, this.props.item)}>delete</a>
+	  <span>
+            <a onClick={this.props.edit.bind(null, this.props.item)}>edit</a>
+	    &nbsp;|&nbsp;
+	  </span>
+	  {this.state.toDelete && (
+	    <span>
+	      <a onClick={this.cancelDelete}>cancel delete</a>
+	      &nbsp;|&nbsp;
+	    </span>
+	  )}
+	  <span>
+	    <a onClick={this.delete}>{this.state.toDelete && 'really '}delete</a>
+	  </span>
 	</div>
       </li>
     )

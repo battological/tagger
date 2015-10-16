@@ -16,6 +16,12 @@ ItemList = React.createClass({
     return (
       <ul className="item-list">
         {this.renderItems()}
+	{!this.props.items.length && (
+	  <li>
+	    <h3 className="item-name">No items match your current tags</h3>
+	    <p>Please double check your tag selection and your matching parameters (any, all, none).</p>
+	  </li>
+	)}
       </ul>
     )
   }

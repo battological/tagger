@@ -3,10 +3,11 @@
   margin: 2%;
 }
 
-.tag-display button {
-  margin-top: 2em;
+.tag-display .all-none {
+  display: flex;
+  margin-top: 1em;
 }
 
-.tag-display .followup {
-  font-weight: bolder;
+.tag-display button {
+  margin-left: 1em;
 }

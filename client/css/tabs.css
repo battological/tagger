@@ -25,3 +25,7 @@
 .input-tab-contents {
   display: flex;
 }
+
+.input-tab-contents label {
+  display: block;
+}

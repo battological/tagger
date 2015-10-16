@@ -6,7 +6,7 @@ ItemCreator = React.createClass({
       editItem: (this.props.editItem || false),
       name: (this.props.editItem ? this.props.editItem.name : ''),
       description: (this.props.editItem ? this.props.editItem.description : ''),
-      whichChecked: []
+      whichChecked: this.props.whichChecked
     })
   },
 
@@ -63,6 +63,12 @@ ItemCreator = React.createClass({
       Meteor.call("addItem", text, description, tags);
     }
 
+    this.itemCancel(e);
+  },
+
+  itemCancel(e) {
+    e.preventDefault();
+
     this.setState({  // remove the item
       editItem: false,
       name: '',
@@ -100,7 +106,10 @@ ItemCreator = React.createClass({
 	    clicked={this.checkedTag} 
 	  />
         </form>
-	<button type="submit" onClick={this.itemSubmit}>{this.state.editItem ? 'Update' : 'Create'}</button>
+	<div className="buttons">
+	  <button type="submit" onClick={this.itemSubmit}>{this.state.editItem ? 'Update' : 'Create'}</button>
+	  <button onClick={this.itemCancel}>Cancel</button>
+	</div>
       </div>
     );
   }

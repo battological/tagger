@@ -6,13 +6,16 @@ body {
 
 a {
   color: #035570;
+  cursor: pointer;
   text-decoration: none;
 }
 
 button { 
   background-color: white;
   border: 1px solid #292929;
+  border-radius: 4px;
   box-shadow: 0;
+  cursor: pointer;
   font-family: "Titillium Web", sans-serif;
 }
 
@@ -21,7 +24,6 @@ h2 {
 }
 
 label {
-  display: block;
   font-size: larger;
   font-weight: bolder;
 }
@@ -32,6 +34,24 @@ ul {
 
 .body {
   border: 2px solid black;
+  border-radius: 4px;
   margin-bottom: 5em;
   padding: 2%;
+}
+
+.sign-in-alert {
+  background-color: #ebccd1;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+}
+
+.taglist {
+  column-count: 3;
+  -moz-column-count: 3;
+  -webkit-column-count: 3;
+}
+
+.taglist .confirm-delete {
+  font-size: x-small;
 }

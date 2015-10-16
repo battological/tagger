@@ -1,10 +1,10 @@
 App = React.createClass({
   getInitialState() {
+    console.log(this.props.data);
     return({
-      bool: 0,  // 1 = AND, 0 = OR, 2 = NOT
-      createEdit: false,
-      editItem: false,
-      tab: this.props.data.items.length ? 0 : 1,  // if no items have been created, start at input page
+      bool: 0,  // 0 = OR, 1 = AND, 2 = NOT
+      editItem: false,  // the item to be created or edited, otherwise false
+      tab: 0,
       whichChecked: []
     });
   },
@@ -82,7 +82,7 @@ App = React.createClass({
       <div>
 	<div className="container">
           <header>
-            <h1>Tagger</h1>
+            <h1>Tagger <span className="beta">Beta</span></h1>
           </header>
 
 	  <div className="navigation">
@@ -95,32 +95,47 @@ App = React.createClass({
 
           <div className="body">
 
+            {!this.props.data.currentUser && (
+	      <div className="sign-in-alert">
+	        <p>Don't forget to sign in!</p>
+	      </div>
+	    )}
+
             {this.state.tab === 0 && (
 	      <div className="view-tab-contents">
 	        <div className="tag-display">
 	          <h2>Your Tags</h2>
 
-	          <div className="booleans">
-	            <form>
-	              <label>Show items that match...</label><br />
-	              <input type="radio" name="booleans" value="OR" onClick={this.changeBool.bind(null, 0)} defaultChecked="checked" />Any
-	              <input type="radio" name="booleans" value="AND" onClick={this.changeBool.bind(null, 1)} />All
-	              <input type="radio" name="booleans" value="NOT" onClick={this.changeBool.bind(null, 2)}/>None <br />
-	              <span className="followup">of the following tags:</span>
-	            </form>
-	          </div>
+	          {this.props.data.tags.length ? (
+		    <div>
+		      <div className="all-none">
+	                <label>Select:</label>
+		        <div className="all-none-buttons">
+                          <button className="check-all" onClick={this.checkAll}>All</button>
+	                  <button className="check-none" onClick={this.checkNone}>None</button>
+		        </div>
+	              </div>
 
-	          <div className="all-none">
-	            <label>Select&nbsp;&nbsp;</label>
-                    <button className="check-all" onClick={this.checkAll}>All</button>&nbsp;
-	            <button className="check-none" onClick={this.checkNone}>None</button>
-	          </div>
+		      <div className="booleans">
+	                <form>
+	                  <label>Matching:</label>
+	                  <input type="radio" name="booleans" value="OR" onClick={this.changeBool.bind(null, 0)} defaultChecked="checked" />Any
+	                  <input type="radio" name="booleans" value="AND" onClick={this.changeBool.bind(null, 1)} />All
+	                  <input type="radio" name="booleans" value="NOT" onClick={this.changeBool.bind(null, 2)}/>None <br />
+	                </form>
+	              </div>
 
-	          <TagList 
-	            tags={this.props.data.tags} 
-	            whichChecked={this.state.whichChecked}
-	            clicked={this.clickedTag} 
-	          />
+		      <TagList 
+	                tags={this.props.data.tags} 
+	                whichChecked={this.state.whichChecked}
+	                clicked={this.clickedTag} 
+	              />
+
+		    </div>
+		  ) : (
+		    <p>No tags to display. Use the Create/Edit tab to create tags and items.</p>
+		  )}
+	          
 	        </div>
 
 	        <div className="item-display">

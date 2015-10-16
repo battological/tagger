@@ -7,10 +7,21 @@
   margin: 0;
 }
 
-.create-edit button {
+.create-edit .buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+}
+
+.create-edit .buttons button {
   font-size: large;
   margin-top: 1em;
   width: 40%;
+}
+
+.create-edit .buttons button[type=submit] {
+  background-color: #337ab7;
+  color: white;
 }
 
 .create-edit input[type=text], textarea {
@@ -18,7 +29,7 @@
 }
 
 .create-edit .item-create-text input, textarea {
-  width: 40%;
+  width: 90%;
 }
 
 .create-edit .tag-input input {

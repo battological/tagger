@@ -1,6 +1,25 @@
 Tag = React.createClass({
-  delete(tag) {
-    Meteor.call("deleteTag", tag);
+  getInitialState() {
+    return({
+      toDelete: false
+    })
+  },
+
+  delete() {
+    if (this.state.toDelete) {
+      Meteor.call("deleteTag", this.props.tag);
+      this.cancelDelete();
+    } else {  // this triggers confirmation of deletion
+      this.setState({
+        toDelete: true
+      });
+    }
+  },
+
+  cancelDelete() {
+    this.setState({
+      toDelete: false
+    });
   },
 
   render() {
@@ -12,7 +31,15 @@ Tag = React.createClass({
 	  onChange={this.props.clicked.bind(null, this.props.tag._id)} 
 	/>
         <span className="tag">{this.props.tag.name}</span>&nbsp;
-	<a href="#" onClick={this.delete.bind(null, this.props.tag)}>&times;</a>
+	{this.state.toDelete ? (
+	  <span className="confirm-delete">
+	    <a onClick={this.delete}>confirm</a>
+	    &nbsp;|&nbsp;
+	    <a onClick={this.cancelDelete}>cancel</a>
+	  </span>
+	) : (
+	  <a onClick={this.delete}>&times;</a>
+	)}
       </div>
     )
   }
