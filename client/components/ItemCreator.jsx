@@ -11,7 +11,7 @@ ItemCreator = React.createClass({
   },
 
   componentWillReceiveProps(newProps) {
-    if (newProps.whichChecked !== this.props.whichChecked) {  // if the whichChecked is updated
+    if (newProps.whichChecked !== this.props.whichChecked && newProps.whichChecked.length) {  // if the whichChecked is updated
       this.setState({
         whichChecked: newProps.whichChecked
       });

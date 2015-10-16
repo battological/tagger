@@ -3,7 +3,7 @@ App = React.createClass({
     console.log(this.props.data);
     return({
       bool: 0,  // 0 = OR, 1 = AND, 2 = NOT
-      editItem: false,  // the item to be created or edited, otherwise false
+      editItem: false,  // the item to be edited, otherwise false
       tab: 0,
       whichChecked: []
     });
