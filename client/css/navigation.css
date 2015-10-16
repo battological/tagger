@@ -1,0 +1,11 @@
+.navigation {
+  display: flex;
+}
+
+.navigation nav {
+  flex: 6;
+}
+
+.navigation span {
+  flex: 1;
+}

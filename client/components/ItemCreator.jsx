@@ -100,7 +100,6 @@ ItemCreator = React.createClass({
 	    clicked={this.checkedTag} 
 	  />
         </form>
-	<TagInput />
 	<button type="submit" onClick={this.itemSubmit}>{this.state.editItem ? 'Update' : 'Create'}</button>
       </div>
     );

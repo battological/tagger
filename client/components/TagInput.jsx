@@ -13,7 +13,9 @@ TagInput = React.createClass({
     return (
       <div className="tag-input">
         <form className="new-tag" onSubmit={this.newTagSubmit}>
+	  <label>Tag name</label>
           <input type="text" ref="tagText" placeholder="New tag" />
+	  <button type="submit" onSubmit={this.newTagSubmit}>Add</button>
         </form>
       </div>
     )

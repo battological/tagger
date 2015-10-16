@@ -1,5 +1,6 @@
 .tag-display {
   flex: 1;
+  margin: 2%;
 }
 
 .tag-display button {

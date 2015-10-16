@@ -1,5 +1,6 @@
 .create-edit {
   flex: 1;
+  padding: 2%;
 }
 
 .create-edit ul {
@@ -8,7 +9,8 @@
 
 .create-edit button {
   font-size: large;
-  width: 100%;
+  margin-top: 1em;
+  width: 40%;
 }
 
 .create-edit input[type=text], textarea {
@@ -16,9 +18,15 @@
 }
 
 .create-edit .item-create-text input, textarea {
-  width: 100%;
+  width: 40%;
 }
 
 .create-edit .tag-input input {
   width: 40%;
+}
+
+
+.create-tag {
+  flex: 1;
+  padding: 2%;
 }

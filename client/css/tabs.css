@@ -1,0 +1,27 @@
+.tabs {
+  display: flex;
+  margin-bottom: -2px;
+}
+
+.tabs div {
+  background-color: white;
+  border: 2px solid black;
+  cursor: pointer;
+  margin-right: 0.5em;
+  padding: 2%;
+}
+
+.tabs a {
+  font-size: x-large;
+  font-weight: bold;
+}
+
+
+.view-tab-contents {
+  display: flex;
+}
+
+
+.input-tab-contents {
+  display: flex;
+}

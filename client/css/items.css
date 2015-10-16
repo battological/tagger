@@ -1,5 +1,6 @@
 .item-display {
   flex: 2;
+  padding: 2%;
 }
 
 h3 {
@@ -10,11 +11,15 @@ li {
   border-bottom: 1px solid lightgray;
   list-style: none;
   padding: 0.5em;
-  width: 60%;
+  width: 80%;
 }
 
 .item-tags {
   color: gray;
   font-size: smaller;
   margin-top: 0;
+}
+
+.controls {
+  font-size: small;
 }

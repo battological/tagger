@@ -21,6 +21,7 @@ h2 {
 }
 
 label {
+  display: block;
   font-size: larger;
   font-weight: bolder;
 }
@@ -30,5 +31,7 @@ ul {
 }
 
 .body {
-  display: flex;
+  border: 2px solid black;
+  margin-bottom: 5em;
+  padding: 2%;
 }

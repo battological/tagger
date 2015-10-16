@@ -1,9 +1,11 @@
 App = React.createClass({
   getInitialState() {
     return({
-      whichChecked: [],
+      bool: 0,  // 1 = AND, 0 = OR, 2 = NOT
+      createEdit: false,
       editItem: false,
-      bool: 0  // 1 = AND, 0 = OR, 2 = NOT
+      tab: this.props.data.items.length ? 0 : 1,  // if no items have been created, start at input page
+      whichChecked: []
     });
   },
 
@@ -57,7 +59,10 @@ App = React.createClass({
   },
 
   edit(item) {
-    this.setState({ editItem: item });
+    this.setState({ 
+      editItem: item,
+      tab: 1
+    });
   },
 
   changeBool(bool) {
@@ -66,60 +71,86 @@ App = React.createClass({
     });
   },
 
+  changeTab(tab) {
+    this.setState({
+      tab: tab
+    })
+  },
+
   render() {
     return (
       <div>
 	<div className="container">
           <header>
             <h1>Tagger</h1>
-            <AccountsUIWrapper />
           </header>
+
+	  <div className="navigation">
+	    <Tabs 
+	      tab={this.state.tab}
+	      changeTab={this.changeTab}
+	    />
+            <AccountsUIWrapper />
+	  </div>
 
           <div className="body">
 
-            <div className="tag-display">
-	      <h2>Your Tags</h2>
+            {this.state.tab === 0 && (
+	      <div className="view-tab-contents">
+	        <div className="tag-display">
+	          <h2>Your Tags</h2>
 
-	      <div className="booleans">
-	        <form>
-	          <label>Show items that match...</label><br />
-	          <input type="radio" name="booleans" value="OR" onClick={this.changeBool.bind(null, 0)} defaultChecked="checked" />Any
-	          <input type="radio" name="booleans" value="AND" onClick={this.changeBool.bind(null, 1)} />All
-	          <input type="radio" name="booleans" value="NOT" onClick={this.changeBool.bind(null, 2)}/>None <br />
-	          <span className="followup">of the following tags:</span>
-	        </form>
+	          <div className="booleans">
+	            <form>
+	              <label>Show items that match...</label><br />
+	              <input type="radio" name="booleans" value="OR" onClick={this.changeBool.bind(null, 0)} defaultChecked="checked" />Any
+	              <input type="radio" name="booleans" value="AND" onClick={this.changeBool.bind(null, 1)} />All
+	              <input type="radio" name="booleans" value="NOT" onClick={this.changeBool.bind(null, 2)}/>None <br />
+	              <span className="followup">of the following tags:</span>
+	            </form>
+	          </div>
+
+	          <div className="all-none">
+	            <label>Select&nbsp;&nbsp;</label>
+                    <button className="check-all" onClick={this.checkAll}>All</button>&nbsp;
+	            <button className="check-none" onClick={this.checkNone}>None</button>
+	          </div>
+
+	          <TagList 
+	            tags={this.props.data.tags} 
+	            whichChecked={this.state.whichChecked}
+	            clicked={this.clickedTag} 
+	          />
+	        </div>
+
+	        <div className="item-display">
+	          <h2>Your Items</h2>
+                  <ItemList 
+	            items={this.whichItems(this.state.whichChecked)} 
+	            edit={this.edit} 
+	            tags={this.props.data.tags}
+	          />
+	        </div>
 	      </div>
+	    )}
 
-	      <div className="all-none">
-	        <label>Select&nbsp;&nbsp;</label>
-                <button className="check-all" onClick={this.checkAll}>All</button>&nbsp;
-	        <button className="check-none" onClick={this.checkNone}>None</button>
+	    {this.state.tab === 1 && (
+	      <div className="input-tab-contents">
+	        <div className="create-edit">
+	          <h2>Item Input</h2>
+                  <ItemCreator 
+	            tags={this.props.data.tags} 
+	            editItem={this.state.editItem}
+	            whichChecked={this.state.editItem.tags || []}
+	          />
+	        </div>
+
+		<div className="create-tag">
+		  <h2>Add Tag</h2>
+	          <TagInput />
+		</div>
 	      </div>
-
-	      <TagList 
-	        tags={this.props.data.tags} 
-	        whichChecked={this.state.whichChecked}
-	        clicked={this.clickedTag} 
-	      />
-	    </div>
-
-	    <div className="item-display">
-	      <h2>Your Items</h2>
-              <ItemList 
-	        items={this.whichItems(this.state.whichChecked)} 
-	        edit={this.edit} 
-	        tags={this.props.data.tags}
-	      />
-	    </div>
-
-	    <div className="create-edit">
-	      <h2>{this.state.editItem ? 'Edit' : 'Create'} an Item</h2>
-              <ItemCreator 
-	        tags={this.props.data.tags} 
-	        editItem={this.state.editItem}
-	        whichChecked={this.state.editItem.tags || []}
-	      />
-	    </div>
+	    )}
 
 	  </div>
 	</div>
