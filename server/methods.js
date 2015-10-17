@@ -30,6 +30,8 @@ Meteor.methods({
 
     Tags.remove(tag._id);  // delete tag
     Items.update({ tags: tag._id }, { $pull: { tags: tag._id } }, { multi: true });  // remove tag from item tag lists
+
+    Meteor.call("ensureNoEmptyTags");
   },
 
   /**
@@ -42,11 +44,6 @@ Meteor.methods({
     if (!Meteor.userId()) {
       throw new Meteor.Error("not-authorized");
     }
-    
-    if (!tags.length) {  // if no tags checked
-      var no_tag = Meteor.call("addTag", "[no tag]");
-      tags = [no_tag];
-    }
 
     var insert = Items.insert({
       name: text,
@@ -54,6 +51,8 @@ Meteor.methods({
       description: description,
       owner: Meteor.userId()
     });
+
+    Meteor.call("ensureNoEmptyTags");
 
     return insert;
   },
@@ -76,6 +75,8 @@ Meteor.methods({
       $set: { name: text, description: description, tags: tags }
     });
 
+    Meteor.call("ensureNoEmptyTags");
+
     return update;
   },
 
@@ -85,5 +86,16 @@ Meteor.methods({
     }
 
     Items.remove(item._id);
-  } 
+  }, 
+
+  /**
+   * Checks for items without associated tags and assigned [no tag] to any it finds
+   */
+  ensureNoEmptyTags() {
+    if (Items.find({ tags: { $size: 0 } }).count()) {  
+      var no_tag = Meteor.call("addTag", "[no tag]");
+      Items.update({ tags: { $size: 0 }}, { $push: { tags: no_tag } }, { multi: true });
+    }
+  }
+
 });

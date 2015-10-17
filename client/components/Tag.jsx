@@ -2,7 +2,7 @@ Tag = React.createClass({
   getInitialState() {
     return({
       toDelete: false
-    })
+    });
   },
 
   delete() {
