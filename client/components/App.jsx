@@ -60,8 +60,16 @@ App = React.createClass({
   edit(item) {
     this.setState({ 
       editItem: item,
-      tab: 1
     });
+    if (item) {
+      this.setState({ tab: 1 });
+    } else {
+      this.setState({ tab: 0 });
+    }
+  },
+
+  endEdit() {
+    this.edit(false);
   },
 
   changeBool(bool) {
@@ -91,6 +99,7 @@ App = React.createClass({
 	        <Tabs 
 	          tab={this.state.tab}
 	          changeTab={this.changeTab}
+		  editing={this.state.editItem ? true : false}
 	        />
 	      </div>
 
@@ -149,10 +158,11 @@ App = React.createClass({
 	        {this.state.tab === 1 && (
 	          <div className="input-tab-contents">
 	            <div className="create-edit">
-	              <h2>Item Input</h2>
+	              <h2>{this.state.editItem ? 'Edit' : 'Create'} Item</h2>
                       <ItemCreator 
 	                tags={this.props.data.tags} 
 	                editItem={this.state.editItem}
+			endEdit={this.endEdit}
 	                whichChecked={this.state.editItem.tags || []}
 	              />
 	            </div>

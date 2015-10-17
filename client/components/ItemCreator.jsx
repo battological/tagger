@@ -75,6 +75,7 @@ ItemCreator = React.createClass({
       description: '',
       whichChecked: [] 
     });
+    this.props.endEdit();  // remove edit item
   },
 
   render() {

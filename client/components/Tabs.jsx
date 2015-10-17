@@ -16,7 +16,7 @@ Tabs = React.createClass({
 	  onClick={this.props.changeTab.bind(null, 1)} 
 	  style={{ borderBottom: this.props.tab === 1 ? '0' : '' }}
 	>
-	  <a>Input</a>
+	  <a>{this.props.editing ? 'Edit' : 'Create'}</a>
 	</div>
 
       </nav>
