@@ -137,6 +137,7 @@ App = React.createClass({
 	              <h2>Your Items</h2>
                       <ItemList 
 	                items={this.whichItems(this.state.whichChecked)} 
+			bool={this.state.bool}
 	                edit={this.edit} 
 	                tags={this.props.data.tags}
 			checked={this.state.whichChecked}

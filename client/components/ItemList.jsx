@@ -2,7 +2,12 @@ ItemList = React.createClass({
   groupItems() {
     // Save some cycles by initially filtering out unchecked tags
     var tags = this.props.tags.filter((tag) => {
-      return _.contains(this.props.checked, tag._id);
+      let contains = _.contains(this.props.checked, tag._id);
+
+      if (this.props.bool === 2) {  // NOT
+        return !contains;
+      }
+      return contains;  // OR
     });
 
     // Group items by tag, duplicating items into each tag it is assigned
@@ -18,7 +23,22 @@ ItemList = React.createClass({
     return tagMap;
   },
 
-  renderItems() {
+  renderUngroupedItems() {
+    return [
+      <h3 key='tags'>{this.props.tags.filter((tag) => { return _.contains(this.props.checked, tag._id); }).map((tag) => { return tag.name; }).join(', ')}</h3>,
+      ...this.props.items.map((item) => {
+      return (
+        <Item 
+          key={item._id} 
+	  item={item} 
+	  edit={this.props.edit} 
+	  tags={this.props.tags}
+	/>
+      );
+    })];
+  },
+        
+  renderGroupedItems() {
     var tagMap = this.groupItems();
 
     var tags = Object.keys(tagMap);
@@ -41,6 +61,14 @@ ItemList = React.createClass({
       toRender.push(<div className="item-class" key={tag}>{items}</div>);
     });
     return toRender;
+  },
+
+  renderItems() {
+    if (this.props.bool === 0 || this.props.bool === 2) {  // OR or NONE
+      return this.renderGroupedItems();
+    } else if (this.props.bool === 1) { 
+      return this.renderUngroupedItems();
+    }
   },
       
   render() {
