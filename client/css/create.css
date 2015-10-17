@@ -7,6 +7,10 @@
   margin: 0;
 }
 
+.create-edit .results {
+  width: 90%;
+}
+
 .create-edit .buttons {
   display: flex;
   justify-content: space-between;

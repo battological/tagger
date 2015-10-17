@@ -3,11 +3,18 @@ ItemCreator = React.createClass({
     // Initialize the state from props.
     // These values are likely to go out of sync.
     return({
+      addResults: false,
       editItem: (this.props.editItem || false),
       name: (this.props.editItem ? this.props.editItem.name : ''),
       description: (this.props.editItem ? this.props.editItem.description : ''),
       whichChecked: this.props.whichChecked
     })
+  },
+
+  componentWillMount() {
+    this.added = 'success';
+    this.updated = 'updated';
+    this.failure = 'fail';
   },
 
   componentWillReceiveProps(newProps) {
@@ -49,6 +56,12 @@ ItemCreator = React.createClass({
     });
   },
 
+  resultTimeout() {
+    setTimeout(function() {
+      this.setState({ addResult: false });  // clear the message
+    }.bind(this), 5000);
+  },
+
   itemSubmit(e) {
     e.preventDefault();
 
@@ -56,11 +69,16 @@ ItemCreator = React.createClass({
     var tags = this.state.whichChecked;
     var description = this.state.description;
 
-    console.log(text+', '+description+', '+tags);
     if (this.state.editItem) {  // editing existing item
-      Meteor.call("updateItem", this.state.editItem._id, text, description, tags); 
+      Meteor.call("updateItem", this.state.editItem._id, text, description, tags, function(err, res) {
+        this.setState({ addResult: err ? this.failure : this.updated });
+        this.resultTimeout();
+      }.bind(this));
     } else {  // creating new item
-      Meteor.call("addItem", text, description, tags);
+      Meteor.call("addItem", text, description, tags, function(err, res) {
+        this.setState({ addResult: err ? this.failure : this.added });
+	this.resultTimeout();
+      }.bind(this));
     }
 
     this.itemCancel(e);
@@ -81,8 +99,14 @@ ItemCreator = React.createClass({
   },
 
   render() {
+    var resultClasses = 'results '+this.state.addResult;
     return (
       <div className="iteam-create-container">
+	{this.state.addResult && (
+	  <div className={resultClasses}>
+            <p>{this.state.addResult === this.added ? 'Successfully added' : (this.state.addResult === this.updated ? 'Successfully updated' : 'Error adding')} tag</p>
+	  </div>
+	)}
         <form className="item-create" onSubmit={this.itemSubmit}>
 	  <div className="item-create-text">
 	    <label>Item name</label>

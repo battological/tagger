@@ -29,3 +29,21 @@
 .input-tab-contents label {
   display: block;
 }
+
+.input-tab-contents .results {
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.input-tab-contents .success {
+  background-color: #dff0d8;
+}
+
+.input-tab-contents .updated {
+  background-color: #bce8f1;
+}
+
+.input-tab-contents .fail {
+  background-color: #f2dede;
+}
