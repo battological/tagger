@@ -1,6 +1,5 @@
 App = React.createClass({
   getInitialState() {
-    console.log(this.props.data);
     return({
       bool: 0,  // 0 = OR, 1 = AND, 2 = NOT
       editItem: false,  // the item to be edited, otherwise false
@@ -140,6 +139,7 @@ App = React.createClass({
 	                items={this.whichItems(this.state.whichChecked)} 
 	                edit={this.edit} 
 	                tags={this.props.data.tags}
+			checked={this.state.whichChecked}
 	              />
 	            </div>
 	          </div>

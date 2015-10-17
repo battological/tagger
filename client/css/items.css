@@ -3,15 +3,27 @@
   padding: 2%;
 }
 
-h3 {
+.item-display h3 {
+  font-size: x-large;
   margin-bottom: 0;
+  text-transform: uppercase;
 }
 
-li {
+.item-display h4 {
+  margin: 0;
+}
+
+.item-display li {
   border-bottom: 1px solid lightgray;
   list-style: none;
-  padding: 0.5em;
-  width: 80%;
+  padding: 1em;
+  width: 90%;
+}
+
+.item-display .item-class {
+  border-left: 1px solid gray;
+  margin-left: 1em;
+  padding: 0 1em 1em 1em;
 }
 
 .item-tags {

@@ -25,7 +25,7 @@ Item = React.createClass({
   render() {
     return (
       <li className="item">
-        <h3 className="item-name">{this.props.item.name}</h3>
+        <h4 className="item-name">{this.props.item.name}</h4>
 	<p className="item-tags">Tags: {
 	  this.props.tags.filter(function(tag) {
 	    return _.contains(this.props.item.tags, tag._id);
