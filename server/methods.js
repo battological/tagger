@@ -8,6 +8,9 @@ Meteor.methods({
     if (!Meteor.userId()) {
       throw new Meteor.Error("not-authorized");
     }
+    if (!tag) {
+      throw new Meteor.Error("empty-tag");
+    }
 
     // Make sure this tag doesn't already exist
     var existing = Tags.find({ owner: Meteor.userId(), name: tag }) 
@@ -43,6 +46,9 @@ Meteor.methods({
   addItem(text, description, tags = []) {
     if (!Meteor.userId()) {
       throw new Meteor.Error("not-authorized");
+    }
+    if (!text.length) {
+      throw new Meteor.Error("empty-item");
     }
 
     var insert = Items.insert({

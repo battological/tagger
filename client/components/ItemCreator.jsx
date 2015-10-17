@@ -69,13 +69,15 @@ ItemCreator = React.createClass({
   itemCancel(e) {
     e.preventDefault();
 
+    if (this.state.editItem) {
+      this.props.endEdit();  // remove edit item from parent
+    }
     this.setState({  // remove the item
       editItem: false,
       name: '',
       description: '',
       whichChecked: [] 
     });
-    this.props.endEdit();  // remove edit item
   },
 
   render() {
