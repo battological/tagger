@@ -1,6 +1,16 @@
+header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
 header .beta {
   color: gray;
   font-size: small;
   font-weight: normal;
   vertical-align: sub;
+}
+
+header .sign-in {
+  margin-right: 10em;
 }

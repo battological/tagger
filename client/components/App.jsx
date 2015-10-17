@@ -83,91 +83,95 @@ App = React.createClass({
 	<div className="container">
           <header>
             <h1>Tagger <span className="beta">Beta</span></h1>
+            <AccountsUIWrapper />
           </header>
 
-	  <div className="navigation">
-	    <Tabs 
-	      tab={this.state.tab}
-	      changeTab={this.changeTab}
-	    />
-            <AccountsUIWrapper />
-	  </div>
-
-          <div className="body">
-
-            {!this.props.data.currentUser && (
-	      <div className="sign-in-alert">
-	        <p>Don't forget to sign in!</p>
+	  {this.props.data.currentUser ? (
+	    <div>
+	      <div className="navigation">
+	        <Tabs 
+	          tab={this.state.tab}
+	          changeTab={this.changeTab}
+	        />
 	      </div>
-	    )}
 
-            {this.state.tab === 0 && (
-	      <div className="view-tab-contents">
-	        <div className="tag-display">
-	          <h2>Your Tags</h2>
+              <div className="body">
 
-	          {this.props.data.tags.length ? (
-		    <div>
-		      <div className="all-none">
-	                <label>Select:</label>
-		        <div className="all-none-buttons">
-                          <button className="check-all" onClick={this.checkAll}>All</button>
-	                  <button className="check-none" onClick={this.checkNone}>None</button>
-		        </div>
-	              </div>
+                {this.state.tab === 0 && (
+	          <div className="view-tab-contents">
+	            <div className="tag-display">
+	              <h2>Your Tags</h2>
 
-		      <div className="booleans">
-	                <form>
-	                  <label>Matching:</label>
-	                  <input type="radio" name="booleans" value="OR" onClick={this.changeBool.bind(null, 0)} defaultChecked="checked" />Any
-	                  <input type="radio" name="booleans" value="AND" onClick={this.changeBool.bind(null, 1)} />All
-	                  <input type="radio" name="booleans" value="NOT" onClick={this.changeBool.bind(null, 2)}/>None <br />
-	                </form>
-	              </div>
+	              {this.props.data.tags.length ? (
+	                <div>
+	                  <div className="all-none">
+	                    <label>Select:</label>
+	                    <div className="all-none-buttons">
+                              <button className="check-all" onClick={this.checkAll}>All</button>
+	                      <button className="check-none" onClick={this.checkNone}>None</button>
+	                    </div>
+	                  </div>
 
-		      <TagList 
-	                tags={this.props.data.tags} 
-	                whichChecked={this.state.whichChecked}
-	                clicked={this.clickedTag} 
+	                  <div className="booleans">
+	                    <form>
+	                      <label>Matching:</label>
+	                      <input type="radio" name="booleans" value="OR" onClick={this.changeBool.bind(null, 0)} defaultChecked="checked" />Any
+	                      <input type="radio" name="booleans" value="AND" onClick={this.changeBool.bind(null, 1)} />All
+	                      <input type="radio" name="booleans" value="NOT" onClick={this.changeBool.bind(null, 2)}/>None <br />
+	                    </form>
+	                  </div>
+
+	                  <TagList 
+	                    tags={this.props.data.tags} 
+	                    whichChecked={this.state.whichChecked}
+	                    clicked={this.clickedTag} 
+	                  />
+
+	                </div>
+	              ) : (
+	                <p>No tags to display. Use the Create/Edit tab to create tags and items.</p>
+	              )}
+	              
+	            </div>
+
+	            <div className="item-display">
+	              <h2>Your Items</h2>
+                      <ItemList 
+	                items={this.whichItems(this.state.whichChecked)} 
+	                edit={this.edit} 
+	                tags={this.props.data.tags}
 	              />
+	            </div>
+	          </div>
+	        )}
 
-		    </div>
-		  ) : (
-		    <p>No tags to display. Use the Create/Edit tab to create tags and items.</p>
-		  )}
-	          
-	        </div>
+	        {this.state.tab === 1 && (
+	          <div className="input-tab-contents">
+	            <div className="create-edit">
+	              <h2>Item Input</h2>
+                      <ItemCreator 
+	                tags={this.props.data.tags} 
+	                editItem={this.state.editItem}
+	                whichChecked={this.state.editItem.tags || []}
+	              />
+	            </div>
 
-	        <div className="item-display">
-	          <h2>Your Items</h2>
-                  <ItemList 
-	            items={this.whichItems(this.state.whichChecked)} 
-	            edit={this.edit} 
-	            tags={this.props.data.tags}
-	          />
-	        </div>
+	            <div className="create-tag">
+	              <h2>Add Tag</h2>
+	              <TagInput />
+	            </div>
+	          </div>
+	        )}
+
 	      </div>
-	    )}
-
-	    {this.state.tab === 1 && (
-	      <div className="input-tab-contents">
-	        <div className="create-edit">
-	          <h2>Item Input</h2>
-                  <ItemCreator 
-	            tags={this.props.data.tags} 
-	            editItem={this.state.editItem}
-	            whichChecked={this.state.editItem.tags || []}
-	          />
-	        </div>
-
-		<div className="create-tag">
-		  <h2>Add Tag</h2>
-	          <TagInput />
-		</div>
-	      </div>
-	    )}
-
-	  </div>
+	    </div>
+	  ) : (
+	    <div className="welcome">
+	      <h2>Welcome to Tagger</h2>
+	      <p>Tagger is a tool to help you organize text items by assigning tags to titles and descriptions.</p>
+	      <p>Please sign in or create an account to continue.</p>
+	    </div>
+	  )}
 	</div>
       </div>
     )

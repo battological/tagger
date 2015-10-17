@@ -8,6 +8,6 @@ AccountsUIWrapper = React.createClass({
   },
 
   render() {
-    return <span ref="container" />;
+    return <span className="sign-in" ref="container" />;
   }
 });
