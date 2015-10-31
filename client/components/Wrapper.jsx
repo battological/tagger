@@ -5,6 +5,7 @@ Wrapper = React.createClass({
     return {
       items: Items.find({}, { sort: { name: 1 } }).fetch(),
       tags: Tags.find({}, { sort: { name: 1 } }).fetch(),
+      tagClasses: TagClasses.find({}, { sort: { name: 1 } }).fetch(),
       currentUser: Meteor.user()
     }
   },

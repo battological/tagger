@@ -7,7 +7,8 @@ ItemCreator = React.createClass({
       editItem: (this.props.editItem || false),
       name: (this.props.editItem ? this.props.editItem.name : ''),
       description: (this.props.editItem ? this.props.editItem.description : ''),
-      whichChecked: this.props.whichChecked
+      whichChecked: this.props.whichChecked,
+      tags: this.props.tags
     })
   },
 
@@ -53,6 +54,12 @@ ItemCreator = React.createClass({
   changeDescription(e) {
     this.setState({
       description: e.target.value
+    });
+  },
+
+  selectTagClass(tagClass) {
+    this.setState({
+      tags: this.props.tags.filter((tag) => { return _.contains(tag.classes, tagClass); })
     });
   },
 
@@ -102,11 +109,15 @@ ItemCreator = React.createClass({
     var resultClasses = 'results '+this.state.addResult;
     return (
       <div className="iteam-create-container">
+
+	{/* Result bubble */}
 	{this.state.addResult && (
 	  <div className={resultClasses}>
             <p>{this.state.addResult === this.added ? 'Successfully added' : (this.state.addResult === this.updated ? 'Successfully updated' : 'Error adding')} tag</p>
 	  </div>
 	)}
+
+	{/* Input form */}
         <form className="item-create" onSubmit={this.itemSubmit}>
 	  <div className="item-create-text">
 	    <label>Item name</label>
@@ -127,8 +138,12 @@ ItemCreator = React.createClass({
 	  </div>
 
           <label>Tags</label>
+	  <TagClassSelector
+	    tagClasses={this.props.tagClasses}
+	    selectTagClass={this.selectTagClass}
+	  />
           <TagList 
-	    tags={this.props.tags} 
+	    tags={this.state.tags} 
 	    whichChecked={this.state.whichChecked} 
 	    clicked={this.checkedTag} 
 	  />

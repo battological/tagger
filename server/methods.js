@@ -37,6 +37,28 @@ Meteor.methods({
     Meteor.call("ensureNoEmptyTags");
   },
 
+  addTagClass(text) {
+    if (!Meteor.userId()) {
+      throw new Meteor.Error("not-authorized");
+    }
+    if (!text) {
+      throw new Meteor.Error("empty-text");
+    }
+
+    // Make sure this tag class doesn't already exist
+    var existing = TagClasses.find({ owner: Meteor.userId(), name: text }) 
+    if (existing.count() > 0) {
+      return existing.fetch()[0]._id;
+    }
+      
+    var insert = TagClasses.insert({
+      name: text,
+      owner: Meteor.userId()
+    });
+
+    return insert;
+  },
+
   /**
    * Adds a new item to the db
    * @param {string} text - The item name

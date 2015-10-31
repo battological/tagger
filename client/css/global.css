@@ -26,6 +26,7 @@ h2 {
 label {
   font-size: larger;
   font-weight: bolder;
+  margin-top: 1em;
 }
 
 ul {
@@ -43,6 +44,11 @@ ul {
   column-count: 3;
   -moz-column-count: 3;
   -webkit-column-count: 3;
+}
+
+.secondary-label {
+  display: inline !important;
+  font-size: smaller;
 }
 
 .taglist .confirm-delete {

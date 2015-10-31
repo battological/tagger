@@ -28,10 +28,6 @@
   color: white;
 }
 
-.create-edit input[type=text], textarea {
-  margin-bottom: 1em;
-}
-
 .create-edit .item-create-text input, textarea {
   width: 90%;
 }

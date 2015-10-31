@@ -1,11 +1,17 @@
 Item = {
   "name": String,
-  "tags": [ String, ... ], // String = id string of each tag
+  "tags": String[], // String = id string of each tag
   "description": String,
   "owner": String
 }
 
 Tag = {
+  "name": String,
+  "owner": String,
+  "classes": String[], // String = id string of each tag class
+}
+
+Class = {
   "name": String,
   "owner": String
 }
