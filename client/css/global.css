@@ -19,6 +19,10 @@ button {
   font-family: "Titillium Web", sans-serif;
 }
 
+button, input, textarea {
+  margin-bottom: 1em;
+}
+
 h2 {
   border-bottom: 1px solid gray;
 }
@@ -26,7 +30,6 @@ h2 {
 label {
   font-size: larger;
   font-weight: bolder;
-  margin-top: 1em;
 }
 
 ul {

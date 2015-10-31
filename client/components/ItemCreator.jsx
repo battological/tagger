@@ -8,7 +8,7 @@ ItemCreator = React.createClass({
       name: (this.props.editItem ? this.props.editItem.name : ''),
       description: (this.props.editItem ? this.props.editItem.description : ''),
       whichChecked: this.props.whichChecked,
-      tags: this.props.tags
+      tags: []
     })
   },
 

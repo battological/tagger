@@ -4,7 +4,7 @@ App = React.createClass({
       bool: 0,  // 0 = OR, 1 = AND, 2 = NOT
       editItem: false,  // the item to be edited, otherwise false
       tab: 0,
-      tags: [],  // the list of tags available given the current tag class
+      tags: this.props.data.tags,  // the list of tags available given the current tag class
       whichChecked: []
     });
   },
@@ -88,7 +88,7 @@ App = React.createClass({
   selectTagClass(tagClass) {
     var tags = this.props.data.tags;
     if (tagClass !== 'all') {
-      this.props.data.tags.filter((tag) => { 
+      tags = tags.filter((tag) => { 
         return _.contains(tag.classes, tagClass);
       });
     }
@@ -133,7 +133,7 @@ App = React.createClass({
 	              {this.state.tags.length ? (
 	                <div>
 	                  <div className="all-none">
-	                    <label>Select:</label>
+	                    <label className="secondary-label">Select:</label>
 	                    <div className="all-none-buttons">
                               <button className="check-all" onClick={this.checkAll}>All</button>
 	                      <button className="check-none" onClick={this.checkNone}>None</button>
@@ -142,7 +142,7 @@ App = React.createClass({
 
 	                  <div className="booleans">
 	                    <form>
-	                      <label>Matching:</label>
+	                      <label className="secondary-label">Matching:</label>
 	                      <input type="radio" name="booleans" value="OR" onClick={this.changeBool.bind(null, 0)} defaultChecked="checked" />Any
 	                      <input type="radio" name="booleans" value="AND" onClick={this.changeBool.bind(null, 1)} />All
 	                      <input type="radio" name="booleans" value="NOT" onClick={this.changeBool.bind(null, 2)}/>None <br />

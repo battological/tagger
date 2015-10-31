@@ -30,7 +30,10 @@ TagClassSelector = React.createClass({
           // Only show the "All" option if specified in props
           // (so that this can be reused in situations where "all" is not
           // appropriate, such as tag creation contexts).
-          {this.props.includeAll && <option value="all">All</option>}
+          {this.props.includeAll ? 
+	    <option value="all">All</option> :
+	    <option value="none">---</option>
+	  }
           {this.renderTagClasses()}
         </select>
       </div>

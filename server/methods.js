@@ -2,9 +2,10 @@ Meteor.methods({
   /**
    * Adds a new tag to the db
    * @param tag {string} - The tag name
-   * @returns {string} - The id of the newly created Tag object in Mongo or the id of the existing Tag object in Mongo
+   * @param tagClasses {string[]} - Array of tag class IDs
+   * @returns {string} - The ID of the newly created Tag object in Mongo or the id of the existing Tag object in Mongo
    */
-  addTag(tag) {
+  addTag(tag, tagClasses) {
     if (!Meteor.userId()) {
       throw new Meteor.Error("not-authorized");
     }
@@ -20,7 +21,8 @@ Meteor.methods({
       
     var insert = Tags.insert({
       name: tag,
-      owner: Meteor.userId()
+      owner: Meteor.userId(),
+      classes: tagClasses
     });
 
     return insert;
@@ -121,7 +123,8 @@ Meteor.methods({
    */
   ensureNoEmptyTags() {
     if (Items.find({ tags: { $size: 0 } }).count()) {  
-      var no_tag = Meteor.call("addTag", "[no tag]");
+      var otherClass = Meteor.call("addTagClass", "Other");
+      var no_tag = Meteor.call("addTag", "[no tag]", [otherClass]);
       Items.update({ tags: { $size: 0 }}, { $push: { tags: no_tag } }, { multi: true });
     }
   }
