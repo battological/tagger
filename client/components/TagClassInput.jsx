@@ -1,4 +1,8 @@
 TagClassInput = React.createClass({
+  componentDidMount() {
+    this.refs.tagClassText.getDOMNode().focus();
+  },
+
   newTagClassSubmit(e) {
     e.preventDefault();
 
@@ -7,15 +11,15 @@ TagClassInput = React.createClass({
     Meteor.call("addTagClass", text);
 
     React.findDOMNode(this.refs.tagClassText).value = '';
+    this.props.inputComplete();
   },
 
   render() {
     return (
-      <form className="new-tag-class" onSubmit={this.newTagClassSubmit}>
-        <label>Tag Class</label>
+      <div className="new-tag-class">
         <input type="text" ref="tagClassText" placeholder="New tag class" />
-        <button type="submit">Add</button>
-      </form>
+        <button onClick={this.newTagClassSubmit}>Add</button>
+      </div>
     );
   }
 });

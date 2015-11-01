@@ -4,14 +4,14 @@ App = React.createClass({
       bool: 0,  // 0 = OR, 1 = AND, 2 = NOT
       editItem: false,  // the item to be edited, otherwise false
       tab: 0,
-      tags: this.props.data.tags,  // the list of tags available given the current tag class
+      tagClass: 'all',
       whichChecked: []
     });
   },
 
   checkAll() {
     this.setState({
-      whichChecked: this.state.tags.map((tag) => { return tag._id })
+      whichChecked: this.props.data.tags.map((tag) => { return tag._id })
     })
   },
 
@@ -85,16 +85,17 @@ App = React.createClass({
     })
   },
 
-  selectTagClass(tagClass) {
+  whichTags() {
     var tags = this.props.data.tags;
-    if (tagClass !== 'all') {
-      tags = tags.filter((tag) => { 
-        return _.contains(tag.classes, tagClass);
-      });
+    if (this.state.tagClass !== 'all') {
+      tags = this.props.data.tags.filter((tag) => { return _.contains(tag.classes, this.state.tagClass); });
     }
+    return tags;
+  },
 
+  selectTagClass(tagClass) {
     this.setState({
-      tags: tags
+      tagClass: tagClass
     });
   },
 
@@ -124,13 +125,14 @@ App = React.createClass({
 	            <div className="tag-display">
 	              <h2>Your Tags</h2>
 
+	              <label className="secondary-label">Tag Class: </label>
 		      <TagClassSelector 
 		        tagClasses={this.props.data.tagClasses}
 			selectTagClass={this.selectTagClass}
 			includeAll={true}
 		      />
 
-	              {this.state.tags.length ? (
+	              {this.props.data.tags.length ? (
 	                <div>
 	                  <div className="all-none">
 	                    <label className="secondary-label">Select:</label>
@@ -150,7 +152,7 @@ App = React.createClass({
 	                  </div>
 
 	                  <TagList 
-	                    tags={this.state.tags} 
+	                    tags={this.whichTags()} 
 	                    whichChecked={this.state.whichChecked}
 	                    clicked={this.clickedTag} 
 	                  />
@@ -168,7 +170,7 @@ App = React.createClass({
 	                items={this.whichItems(this.state.whichChecked)} 
 			bool={this.state.bool}
 	                edit={this.edit} 
-	                tags={this.state.tags}
+	                tags={this.whichTags()}
 			checked={this.state.whichChecked}
 	              />
 	            </div>

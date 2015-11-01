@@ -5,12 +5,30 @@ TagClassSelector = React.createClass({
     });
   },
 
+  getInitialState() {
+    return ({
+      tagClassInput: false
+    });
+  },
+      
   selectTagClass(e) {
     e.preventDefault();
     
     this.props.selectTagClass(e.target.value);
   },
     
+  tagClassInput() {
+    this.setState({
+      tagClassInput: true
+    });
+  },
+
+  disableTagClassInput() {
+    this.setState({
+      tagClassInput: false
+    });
+  },
+
   renderTagClasses() {
     return this.props.tagClasses.map((tagClass) => {
       return <option key={tagClass._id} value={tagClass._id}>{tagClass.name}</option>
@@ -20,7 +38,6 @@ TagClassSelector = React.createClass({
   render() {
     return (
       <div className="tag-class-selection">
-	<label className="secondary-label">Tag Class </label>
         <select 
           ref="tag-class" 
           className="tag-class" 
@@ -36,6 +53,16 @@ TagClassSelector = React.createClass({
 	  }
           {this.renderTagClasses()}
         </select>
+
+	{/* Only display the following if input is activated (via props) */}
+        {this.props.input && 
+	  <span className="make-new">
+	    {this.state.tagClassInput ? 
+	      <TagClassInput inputComplete={this.disableTagClassInput} /> : 
+	      <button className="plus" onClick={this.tagClassInput}>+</button>
+	    }
+	  </span>
+	}
       </div>
     )
   }

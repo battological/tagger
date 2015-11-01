@@ -10,4 +10,9 @@
 
 .tag-display button {
   margin-left: 1em;
+  vertical-align: middle;
+}
+
+.tag-display .tag-class-selection {
+  display: inline;
 }

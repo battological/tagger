@@ -8,7 +8,7 @@ ItemCreator = React.createClass({
       name: (this.props.editItem ? this.props.editItem.name : ''),
       description: (this.props.editItem ? this.props.editItem.description : ''),
       whichChecked: this.props.whichChecked,
-      tags: []
+      tagClass: ''
     })
   },
 
@@ -57,9 +57,13 @@ ItemCreator = React.createClass({
     });
   },
 
+  whichTags() {
+    return this.props.tags.filter((tag) => { return _.contains(tag.classes, this.state.tagClass); });
+  },
+
   selectTagClass(tagClass) {
     this.setState({
-      tags: this.props.tags.filter((tag) => { return _.contains(tag.classes, tagClass); })
+      tagClass: tagClass
     });
   },
 
@@ -143,7 +147,7 @@ ItemCreator = React.createClass({
 	    selectTagClass={this.selectTagClass}
 	  />
           <TagList 
-	    tags={this.state.tags} 
+	    tags={this.whichTags()} 
 	    whichChecked={this.state.whichChecked} 
 	    clicked={this.checkedTag} 
 	  />

@@ -6,11 +6,21 @@ Meteor.methods({
    * @returns {string} - The ID of the newly created Tag object in Mongo or the id of the existing Tag object in Mongo
    */
   addTag(tag, tagClasses) {
+    tag = tag.trim();
+    tagClasses = tagClasses.map((tc) => { return tc.trim(); });
+
     if (!Meteor.userId()) {
       throw new Meteor.Error("not-authorized");
     }
     if (!tag) {
       throw new Meteor.Error("empty-tag");
+    }
+    if (!tagClasses || !tagClasses.length || tagClasses[0] === '') {
+      throw new Meteor.Error("empty-tag-class");
+    }
+
+    if (tagClasses[0] === 'none') {
+      tagClasses[0] = 'Other';
     }
 
     // Make sure this tag doesn't already exist
@@ -40,6 +50,8 @@ Meteor.methods({
   },
 
   addTagClass(text) {
+    text = text.trim();
+
     if (!Meteor.userId()) {
       throw new Meteor.Error("not-authorized");
     }
@@ -68,6 +80,8 @@ Meteor.methods({
    * @returns {ObjectId} - The ID of the newly created Item object in Mongo
    */
   addItem(text, description, tags = []) {
+    text = text.trim();
+    
     if (!Meteor.userId()) {
       throw new Meteor.Error("not-authorized");
     }

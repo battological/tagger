@@ -57,3 +57,12 @@ ul {
 .taglist .confirm-delete {
   font-size: x-small;
 }
+
+.make-new .plus {
+  font-weight: bold;
+}
+
+.new-tag-class {
+  display: inline;
+  margin-left: 0.5em;
+}
